@@ -15,8 +15,18 @@ def is_exist(id: int) -> bool:
     return False
 
 
+def new_user(data: list):
+    user_id = data[0]
+    name = data[1]
+    age = data[2]
+    photo = data[3]
+    description = data[4]
+    telegram = data[5]
+    
+    cur.execute(f'''INSERT INTO users (user_id, name, age, photo, description, telegram)
+                VALUES ({user_id}, "{name}", {age}, "{photo}", "{description}", "{telegram}")''')
 
-
+    connection.commit()
 
 def is_db_exsits():
     try:

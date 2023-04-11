@@ -4,7 +4,7 @@ CREATE TABLE "users" (
 	"name"	TEXT,
 	"age"	INTEGER,
 	"photo"	TEXT,
-	"description"	NUMERIC,
-	"telegram"	TEXT,
+	"description"	TEXT,
+	"telegram"	TEXT UNIQUE,
 	PRIMARY KEY("id")
 );
