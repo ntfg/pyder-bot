@@ -8,3 +8,10 @@ CREATE TABLE "users" (
 	"telegram"	TEXT UNIQUE,
 	PRIMARY KEY("id")
 );
+
+CREATE TABLE "matches" (
+	"id"	INTEGER NOT NULL UNIQUE,
+	"send"	INTEGER,
+	"receive"	INTEGER,
+	PRIMARY KEY("id" AUTOINCREMENT)
+);

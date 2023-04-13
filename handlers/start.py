@@ -1,5 +1,6 @@
 from misc import dp, bot
 from data import dataworks
+from .menu import MainMenu, menu_kb
 from aiogram import types
 from aiogram.dispatcher.filters.state import StatesGroup, State
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
@@ -18,7 +19,9 @@ class Start(StatesGroup):
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
     if dataworks.is_exist(message["from"]["id"]):
-        await message.answer("Привет! Рады снова видеть тебя в Pyder")
+        await message.answer("Привет! Рады снова видеть тебя в Pyder",
+                             reply_markup=menu_kb)
+        await MainMenu.menu.set()
     else:
         await message.answer("Привет! Добро пожаловать в Pyder\n"
                              "Здесь ты можешь найти единомышленников, используя не лицо,а код.\n\n"
@@ -75,3 +78,12 @@ async def description(message: types.Message):
         Start.data.append(message.text) 
         Start.data.append(message["from"]["username"]) 
         dataworks.new_user(Start.data)
+        await bot.send_photo(message.from_id, Start.data[3],
+                             caption=("Вот твоя анкета:\n\n"
+                                      f"{Start.data[1]}, {Start.data[2]}\n"
+                                      f"{Start.data[4]}"),
+                             reply_markup=menu_kb)
+        
+        Start.data = []
+        await MainMenu.menu.set()
+        

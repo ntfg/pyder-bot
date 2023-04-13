@@ -27,6 +27,20 @@ def new_user(data: list):
                 VALUES ({user_id}, "{name}", {age}, "{photo}", "{description}", "{telegram}")''')
 
     connection.commit()
+    
+    
+def load_match(user_id: int) -> list[tuple]:
+    return cur.execute(f'''SELECT * FROM matches WHERE receive = {user_id}''').fetchone()
+
+
+def make_match(send_id: int, receive: int):
+    cur.execute(f'''INSERT INTO matches (send, receive)
+                VALUES ({send_id}, {receive})''')
+    
+
+def get_app(user_id: int) -> list[tuple]:
+    return cur.execute(f'''SELECT * FROM users WHERE user_id <> {user_id} ORDER BY RANDOM() LIMIT 1''').fetchone()
+    
 
 def is_db_exsits():
     try:
