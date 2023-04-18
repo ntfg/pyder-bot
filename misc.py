@@ -12,4 +12,4 @@ token = os.getenv("BOT_TOKEN")
 redis = aioredis.Redis()
 
 bot = Bot(token=token)
-dp = Dispatcher(bot, storage=RedisStorage2())
+dp = Dispatcher(bot, storage=MemoryStorage())

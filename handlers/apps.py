@@ -22,7 +22,7 @@ appsview_kb.add(KeyboardButton("Вернуться в меню↩️"))
 
 @dp.message_handler(Text(equals="Оценить❤"), state=AppsView.view)
 async def like(message: types.Message):
-    application = dataworks.get_app(message.from_id)
+    application = dataworks.get_user_app(message.from_id)
     dataworks.make_match(message.from_id, application[1])
     await message.answer("Лайк отправлен! Ждём ответа")
     await next(message)
@@ -33,7 +33,7 @@ async def next(message: types.Message):
     if dataworks.load_match(message.from_id):
         await AppsView.matches.set()
     else:   
-        application = dataworks.get_app(message.from_id)
+        application = dataworks.get_random_app(message.from_id)
         await bot.send_photo(message.from_id, application[4],
                              caption=(f"{application[2]}, {application[3]}\n\n"
                                       f"{application[5]}"),

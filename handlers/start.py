@@ -77,7 +77,7 @@ async def description(message: types.Message):
         await message.answer("Отлично, регистрация завершена!")
         Start.data.append(message.text) 
         Start.data.append(message["from"]["username"]) 
-        dataworks.new_user(Start.data)
+        dataworks.create_app(Start.data)
         await bot.send_photo(message.from_id, Start.data[3],
                              caption=("Вот твоя анкета:\n\n"
                                       f"{Start.data[1]}, {Start.data[2]}\n"

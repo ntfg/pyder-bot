@@ -15,7 +15,7 @@ def is_exist(id: int) -> bool:
     return False
 
 
-def new_user(data: list):
+def create_app(data: list):
     user_id = data[0]
     name = data[1]
     age = data[2]
@@ -23,6 +23,7 @@ def new_user(data: list):
     description = data[4]
     telegram = data[5]
     
+    cur.execute(f'''DELETE FROM users WHERE user_id = {user_id}''')
     cur.execute(f'''INSERT INTO users (user_id, name, age, photo, description, telegram)
                 VALUES ({user_id}, "{name}", {age}, "{photo}", "{description}", "{telegram}")''')
 
@@ -36,9 +37,10 @@ def load_match(user_id: int) -> list[tuple]:
 def make_match(send_id: int, receive: int):
     cur.execute(f'''INSERT INTO matches (send, receive)
                 VALUES ({send_id}, {receive})''')
+    connection.commit()
     
 
-def get_app(user_id: int) -> list[tuple]:
+def get_random_app(user_id: int) -> list[tuple]:
     return cur.execute(f'''SELECT * FROM users WHERE user_id <> {user_id} ORDER BY RANDOM() LIMIT 1''').fetchone()
     
 
@@ -50,6 +52,10 @@ def is_db_exsits():
             script = script.read()
             cur.executescript(script)
             connection.commit()
+            
+
+def get_user_app(user_id: int) -> list[tuple]:
+    return cur.execute(f'''SELECT * FROM users WHERE user_id = {user_id}''').fetchone()
             
             
 is_db_exsits()
