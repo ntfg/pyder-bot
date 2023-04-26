@@ -1,6 +1,6 @@
 from misc import dp, bot 
 from data import dataworks
-from .apps import AppsView, next, appsview_kb
+from .apps import AppsView, next_app, appsview_kb
 from .my_app import MyApp, myapp_kb
 from aiogram import types 
 from aiogram.dispatcher.filters.state import StatesGroup, State
@@ -21,8 +21,7 @@ menu_kb.add(KeyboardButton("Моя анкета🤓"))
 
 @dp.message_handler(Text(equals="Смотреть анкеты🔭") ,state=MainMenu)
 async def menu_apps(message: types.Message):
-    await next(message)
-    await AppsView.view.set()
+    await next_app(message)
     
     
 @dp.message_handler(Text(equals="Вернуться в меню↩️"), state=[AppsView.view, MyApp.view])

@@ -31,7 +31,11 @@ def create_app(data: list):
     
     
 def load_match(user_id: int) -> list[tuple]:
-    return cur.execute(f'''SELECT * FROM matches WHERE receive = {user_id}''').fetchone()
+    try:
+        user_id = cur.execute(f'''SELECT send FROM matches WHERE receive = {user_id}''').fetchone()[0]
+        return get_user_app(user_id)
+    except:
+        return
 
 
 def make_match(send_id: int, receive: int):
@@ -58,4 +62,7 @@ def get_user_app(user_id: int) -> list[tuple]:
     return cur.execute(f'''SELECT * FROM users WHERE user_id = {user_id}''').fetchone()
             
             
+def remove_match(send_id: int, receive_id: int):
+    cur.execute(f'''DELETE FROM matches WHERE receive = {receive_id} AND send = {send_id}''')
+    
 is_db_exsits()
