@@ -24,7 +24,7 @@ async def start(message: types.Message):
         await MainMenu.menu.set()
     else:
         await message.answer("Привет! Добро пожаловать в Pyder\n"
-                             "Здесь ты можешь найти единомышленников, используя не лицо,а код.\n\n"
+                             "Здесь ты можешь найти единомышленников, и, возможно, сделать мир лучше\n\n"
                              "Но для начала надо пройти регистрацию\n"
                              "Введи своё имя:")
         await Start.name.set()
